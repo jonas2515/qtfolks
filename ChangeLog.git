@@ -1,0 +1,1058 @@
+commit e5ee2dda403be7b24a56906ea523cccd36b9d966
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Aug 25 09:37:05 2011 -0700
+
+    Note fix of GType initialization in 0.2.2.
+
+commit 48cebc60e26cc28ef2bb1c8eae082293ad3e55c0
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Aug 25 09:36:38 2011 -0700
+
+    Clean up format of NEWS file.
+
+commit d0c91c57809a2ceed0d96741176ac8395907ad84
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Aug 25 08:39:35 2011 -0700
+
+    Post-release version bump.
+
+commit 883dea3db6b1fbffdecb85cc462962818bf44116
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Aug 25 08:38:34 2011 -0700
+
+    Release version 0.2.2
+
+commit 1932a1066c502c66579ec3662545be1477e8579f
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Aug 25 08:35:26 2011 -0700
+
+    Catch NEWS up through 0.2.1.
+
+commit fa48f9fc8fbb933566a98137a9a4ae32086101c9
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Aug 25 08:53:23 2011 -0700
+
+    Distribute data files for demo.
+
+commit 0990a3bae70d6bde1a0dfbdfad47c13f91375682
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Aug 24 14:41:10 2011 -0700
+
+    Unref the correct object when updating postal addresses for a QContact.
+
+commit 1e3e92e4d5ed069746f1862e9698fa9e81d8cd3d
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Aug 24 09:02:56 2011 -0700
+
+    Don't assume that all NameDetails are also AliasDetails.
+    
+    For instance, this isn't true for Edsf.Persona as of this writing.
+
+commit 34193191640b332458912fc0631a82626fc9cdf4
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Aug 24 08:59:05 2011 -0700
+
+    Add extra safety to gObjectClear().
+
+commit c842644e06a70862840d0534bdeaa9d39fc738fd
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Aug 23 14:42:00 2011 -0700
+
+    Fix the set type for adding postal addresses in new personas.
+
+commit 4f0336e5e13cdd997a17249cb85cdbb59fcade85
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Aug 23 14:38:51 2011 -0700
+
+    Factor out common AbstractFieldDetails hash creation.
+
+commit e012f3e237ba87fa7d5aefd72320a0e230ab2385
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Aug 23 14:32:29 2011 -0700
+
+    Fix the type used for AbstractFieldDetails hashes.
+
+commit 630c0aa31df658e4b5f01a2d11fe6b4ba3b4af78
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Aug 23 14:31:07 2011 -0700
+
+    Fix the type used for FolksRole hashes.
+
+commit 20671e2a894daa34e188731a0b0b2d60281efa3b
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Aug 23 13:52:22 2011 -0700
+
+    Factor out common *FieldDetails persona-adding code.
+
+commit 6abb5524e4c23e8639558e7455de0de8cd2fbb96
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Aug 2 14:29:30 2011 -0700
+
+    Adjust for *FieldDetails being rebased upon AbstractFieldDetails.
+
+commit 4a61b78ebacc9b59674a71460beaecbca1c56af4
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Aug 1 16:59:29 2011 -0700
+
+    Update to Folks.Avatar.avatar API change.
+
+commit a97c9e5f5965719da21c57804ed0ca2f10cba4ee
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Aug 1 17:02:07 2011 -0700
+
+    Ensure the GType system is initialized.
+
+commit 381638e1f247a1be530444537e71f2b9ae178495
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri May 13 12:17:12 2011 -0700
+
+    Release version 0.2.1
+
+commit d555d8ebc75dd2646bc0f7aa5717f534f562ead7
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu May 12 14:40:11 2011 -0700
+
+    Require Folks 0.5.1 for the API updates.
+    
+    Closes: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 6ae7487d61d59952804e13d018eef72c629b03ac
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu May 12 15:48:12 2011 -0700
+
+    Adjust for pkg-config file changes in Folks.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 17ad9b81c118bfc1e7f448ac2f28438a085f56a2
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu May 12 13:45:43 2011 -0700
+
+    Update type of details arg in folks_individual_add_persona_from_details().
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 321c6759a0cedba7ea4386c1e5e76af4b928d8f9
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu May 12 13:24:05 2011 -0700
+
+    Don't assume every FolksFieldDetails has a non-NULL types set.
+    
+    This prevents a crasher.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 9f0d53adc6c91b1170bbd1f4093d3f5bcba2e2a5
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 18:30:05 2011 -0700
+
+    Adjust for changes to FolksIndividualAggregator::individuals-changed.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit ff88a2d86e669feefce755578a57c8ce8bedf77b
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 15:24:12 2011 -0700
+
+    Adjust for changes to FolksImDetails.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 4e5f28e6f2222a2ff8f164a6ac462b2a9f4b2e81
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 15:08:38 2011 -0700
+
+    Fix the element type for folks_role_details_set_roles().
+
+commit 1c025bbc1a19e05eb1550257098d9794bda3c98c
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 14:40:43 2011 -0700
+
+    Adjust for changes to folks_individual_aggregator_add_persona_from_details().
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit da03020c8b36144e2d7c4523654dbb5f49a90d79
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 14:23:07 2011 -0700
+
+    Adjust for changes to FolksIndividual::personas-changed.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 42c66bcdb25cce8a3144a624016b983905a15c09
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 13:46:45 2011 -0700
+
+    Adjust for changes to FolksRoleDetails.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 3768099454c57a84de3034146ae20961e394bd46
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 13:45:48 2011 -0700
+
+    Adjust for changes to FolksNoteDetails.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 1a88f4768296994f474eea98af491a0eabf280f9
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 13:26:53 2011 -0700
+
+    Adjust for changes to folks_individual_get_personas().
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 4f0cdba657b89f3f8aaa1bba2ea9ff858b384005
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 13:18:17 2011 -0700
+
+    Adjust for changes to FolksPhoneDetails.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit e39040b7076d3212753b56059d062aed10cccaa4
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 13:16:00 2011 -0700
+
+    Adjust for changes to FolksUrlDetails.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 9de773c7a75532b1aeeef9f8e53d01156ef11c64
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 13:11:18 2011 -0700
+
+    Adjust for changes to FolksPostalAddressDetails.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 431b3d4dd10cf8ccde275ddcf37f8f5af5554f27
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed May 11 12:45:24 2011 -0700
+
+    Adjust for changes to FolksEmailDetails.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 43a12b82da5d6e554381ded24d0e73d289d11b25
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri May 6 17:05:36 2011 -0700
+
+    Adjust for changes to FolksFieldDetails.
+    
+    Helps: bmc#16791 - Port QtFolks to Folks 0.5.1
+
+commit 6bca400d047715ca09e45b64c5a027ca09edd160
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu May 5 07:43:42 2011 -0700
+
+    Revert "Cut arbitrary offset in model roles."
+    
+    This reverts commit ceca547a99fab4acebb84bb69baeeb845f3d3acb.
+    
+    Thanks to Stephen Kelly for pointing out that Qt::UserRole is used in some
+    standard places in Qt (like QComboBox).
+
+commit a8bb412dbba263338d9dc5b04fde2da4a9d11719
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Apr 26 15:45:13 2011 -0700
+
+    Avoid unnecessary copies in foreach() calls.
+
+commit db41ef806d0133bcfda141e93ea2959ccbbe5a28
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Apr 26 15:33:02 2011 -0700
+
+    Standardize on no space between a function name and left paren.
+
+commit 40c7f2f1a6dc00ca92e2c9a06348e21d27c25b87
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Apr 26 15:21:58 2011 -0700
+
+    Cut obsolete define.
+
+commit ceca547a99fab4acebb84bb69baeeb845f3d3acb
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Apr 26 15:17:31 2011 -0700
+
+    Cut arbitrary offset in model roles.
+
+commit b4d247d96e7cf31ace3a97a77e760c016e8ac9b4
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Apr 26 13:48:06 2011 -0700
+
+    Fix a trivial typo.
+
+commit 37b5f336d13192a958033aab5c25c785d6d321a4
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Apr 22 11:21:45 2011 -0700
+
+    Install the demo
+
+commit 5f32fba9f4448319e0d34c5fb9ddd2b3139e7067
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Apr 12 01:27:08 2011 -0700
+
+    Post-release version bump.
+
+commit 2d2489797a3ad78c7b0e0bb3db5eb7ed10b5ba8b
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Apr 12 00:27:02 2011 -0700
+
+    Release version 0.2.0
+
+commit fb1786764f98ede3c3eb52ed73dcd4a16dfe4cfe
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Apr 12 00:26:12 2011 -0700
+
+    Distribute required files for the demo.
+
+commit 5dced0062da6bfbc7f37766f7f32d8279b236122
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Sat Apr 2 17:16:37 2011 -0700
+
+    Support async contact removal.
+
+commit 1140759045706b0612197a40862efbd2c481724f
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 17:20:48 2011 -0700
+
+    Contact edits: save avatar
+
+commit e5985624791f0f5870ebcebfe057d5dca4fb34d1
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 16:39:51 2011 -0700
+
+    Contact edits: save addresses
+
+commit cd2a8a96c997d8a8ffb53194e92ed82f79b7c19d
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 15:39:33 2011 -0700
+
+    Contact edits: save online accounts
+
+commit 2a9224cf4249ecb65ca07e292cddd9ce04ecf03c
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 14:04:59 2011 -0700
+
+    Contact edits: save birthday
+
+commit 2313ca712d1f29d071e63f1952727c29ffdb8213
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 13:12:38 2011 -0700
+
+    Contact edits: save favorite
+
+commit d393b7b4dcc6665a7e756580b5ebaa129046ffa8
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 12:48:53 2011 -0700
+
+    Contact edits: save notes
+
+commit 7a6f93664e0e52ea630021c8f8268df0ad59d448
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 12:18:19 2011 -0700
+
+    Contact edits: save URLs
+
+commit ba2961fb983af4fc5e5472dfc5e7d15b901c46ab
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 11:07:11 2011 -0700
+
+    Contact edits: save organizations (as roles)
+
+commit 82a252def73cd20b4d825ed4e78320dd9dd5ff81
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 10:25:36 2011 -0700
+
+    Contact edits: save nickname (as alias)
+
+commit 317f643e49bcee50829bfd4a06c198b8e14c5425
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 09:21:55 2011 -0700
+
+    Contact edits: save gender
+
+commit 6176b3b6b6062a13c6f22b1094dab8bb4c86d194
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Sat Apr 9 17:53:53 2011 -0700
+
+    Contact edits: save email addresses
+
+commit 6d0fec387842cab70853ce3845c045b69762af47
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Sat Apr 9 17:27:44 2011 -0700
+
+    Contact edits: save phone numbers.
+
+commit 20b4711df018e29729416b2ea289ce11807ecae1
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Apr 8 15:25:09 2011 -0700
+
+    Support async QContactSaveRequest contact edits
+
+commit 630f256253b747fab606ece8ac55b22c4123b2d7
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 23:58:50 2011 -0700
+
+    Contact adds: save addresses
+
+commit 41bbab35d6ad2ca604e608cf5bb0c86b24d72f04
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 23:11:08 2011 -0700
+
+    Contact adds: save avatar
+
+commit ad69ee4254f2960df22831f10200c867aab153c2
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 23:02:54 2011 -0700
+
+    Contact adds: save organizations (as roles)
+
+commit 64d42bea9d41714156ec8e459113845b85bc472f
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 22:39:30 2011 -0700
+
+    Contact adds: save URLs
+
+commit 80a4db58fecfbc9af68313d0e505bded6413eebc
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 22:36:55 2011 -0700
+
+    Contact adds: save email
+
+commit d077b8583925320ea3d179ba81553c0a88635d7f
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 22:17:07 2011 -0700
+
+    Contact adds: save birthday
+
+commit 2636b1544523237b46e9c406a73078c5e8b452de
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 22:03:31 2011 -0700
+
+    Contact adds: save favorite
+
+commit 876ea7a8637852dd8b2bcc5e43e1a1aebf06fdd0
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 21:35:42 2011 -0700
+
+    Contact adds: save gender
+
+commit 293b4fbc245811a045331fda65a1630896413a4d
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 21:13:16 2011 -0700
+
+    Contact adds: save notes
+
+commit 1419c1ed89069f89fa573e13e0d4f8d55cc63aee
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Apr 8 14:55:36 2011 -0700
+
+    Contact adds: save online accounts
+
+commit 4a666c133557f1592d2b7bae127d28d75a0db940
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Apr 8 15:43:00 2011 -0700
+
+    Contact adds: Save phone numbers
+
+commit 12aabaa836d7eba44c9796a09f24f5057f1cad32
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Apr 8 15:42:16 2011 -0700
+
+    Support async QContactSaveRequest contact adds
+
+commit a286bb2060fcdd41af9eb4d235f8721d108a3ce4
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Sun Apr 10 18:13:05 2011 -0700
+
+    Set our detailDefinitions to exclude the details we don't support.
+
+commit 6c0d6064432bde68ef9539588325285699d2566b
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Sun Apr 10 17:09:04 2011 -0700
+
+    Specify that we support the second (1.1) mobility API
+
+commit de5e288e83c0f72a52659cac6673c7569bf6a52e
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Apr 11 14:05:28 2011 -0700
+
+    Handle changes to an Individual's birthday.
+
+commit 3495b0d0588c481633620f83cbd98f8c5cc2d845
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Sun Apr 3 22:53:52 2011 -0700
+
+    Implement ManagerEngine::contact()
+
+commit 0b2c96d63243c8c25856640939efcfcc46cfb261
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Sun Apr 3 15:15:20 2011 -0700
+
+    Bump Folks requirement
+
+commit afa65d40f23d0686fa6f37c0c242eb1f6221b17d
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Mar 22 16:05:20 2011 -0700
+
+    Post-release version bump.
+
+commit 2c273ef7c6ba76ae3a805043f8a841915192e76e
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Mar 22 15:48:04 2011 -0700
+
+    Release version 0.1.1
+
+commit e8a5d374367d529272b4c3bba410dcd4a7df51d7
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 18 08:01:14 2011 -0700
+
+    Update to TelepathyQt4 0.5.x
+
+commit a4736c0c4b9a13efbab84889ddb77de0f645ff5f
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Mar 17 14:23:02 2011 -0700
+
+    Update to API changes in Folks 0.4.0
+
+commit de6dcbb8dd184e606a2808ca8b2303e2824056d9
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Mar 7 14:45:22 2011 -0800
+
+    Set an initial value for signalHandlerId.
+
+commit 39d3ab7bb80a21571331c28989b8540bc909c150
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 16:50:01 2011 -0800
+
+    Display the Address in the demo.
+    
+    This requires more-invasive changes than other fields, since this needs to span
+    multiple rows. And, of course, it's not suitable for an i10n-friendly
+    application, since it hardcodes the address formatting (which is
+    country-specific and very difficult to get exactly right).
+    
+    Furthermore, this allocates each row for the address regardless of whether it
+    contains text or not.
+
+commit e4cbcb8d9e1001d4f9be0b398f9bb59ccc974949
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 17:36:57 2011 -0800
+
+    Version bump.
+
+commit 5fde7f64bdf3ef3405439e45e9ce73e977b18da6
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 16:39:17 2011 -0800
+
+    Add the Address field.
+
+commit fcc77318b1efae8a0d2e42eda0063701f9fbc4fd
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 16:07:49 2011 -0800
+
+    Display Birthday field in demo.
+
+commit b83c716b98ea17ecde70082d04de28bb2b79019a
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 16:02:22 2011 -0800
+
+    Add the Birthday field.
+
+commit 95211ccff21a5b361d38398e58a38312e3f03034
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 15:41:22 2011 -0800
+
+    Display Favorite field in demo.
+
+commit 54ce401a58560756dc24d116e3e69048d3f55134
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 15:31:29 2011 -0800
+
+    Add the Favorite field.
+
+commit 811212a28113343353a4bff04231c0c888c244dd
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 10:18:14 2011 -0800
+
+    Display Notes in demo
+
+commit 8358d10a7f66ab24d36679d7b028f003bba2fd71
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Fri Mar 4 08:50:15 2011 -0800
+
+    Add Note field
+
+commit 6fe0fccc1981ab9af7b0b433b959d65588a17c92
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Mar 2 21:50:00 2011 -0800
+
+    Display Organization in the demo
+
+commit ad5ff002eeea917ebc6c24839860fc9c94bc61d8
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Mar 2 22:00:10 2011 -0800
+
+    Add the Organization field.
+
+commit e147c83ef8001d4491ebf8b488503c18a2ee44d3
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Mar 3 14:41:24 2011 -0800
+
+    Version bump.
+
+commit ec00736a4ae49cfcc7e3e871311b3a749d770697
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Mar 2 19:28:24 2011 -0800
+
+    Display email addresses in the demo.
+
+commit 7b56b5c1786d20be4923591ace9d92b8d714d4ac
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Mar 2 19:24:28 2011 -0800
+
+    Display phone numbers in the demo.
+
+commit a0ae3e35ddcc9ee16d15b2281eecec6bb543bb7a
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Mar 2 13:42:51 2011 -0800
+
+    Add the PhoneNumbers field.
+
+commit 73fdaa3ab8b89bbaa8deb6e473684b57c2f523f9
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Mar 2 08:23:00 2011 -0800
+
+    Add the EmailAddresses field.
+
+commit c6ee840366cb7ed486147da70006a90054421abc
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Mar 2 08:22:18 2011 -0800
+
+    Save the Folks url TYPE as a context, not subType.
+    
+    In the process, add a utility for setting detail contexts.
+
+commit ab46fa57ea788f7f1dddd1b71b433b3273b9aa34
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Feb 23 17:24:02 2011 -0800
+
+    Distribute the test data files.
+
+commit 27669d26b7948afeb5459e39832337d884e92e75
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Feb 23 17:13:48 2011 -0800
+
+    Generate the plugin symlink.
+    
+    There doesn't seem to be a way to distribute symlinks, so this change generates
+    it after building the library the plugin symlink points to.
+
+commit c03b9a021dc6d41c108ab64b203cd5baa6806a5b
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Feb 23 16:01:48 2011 -0800
+
+    Include the contact-retrieval.h file in the program.
+
+commit 9157b504d4c0045b0825bb7309bdb788003014ed
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Feb 23 15:54:34 2011 -0800
+
+    Re-arrange items in the tests Makefile.am
+
+commit ea01d87556e13850bd606b493d509c3205cbcad7
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Feb 21 14:34:52 2011 -0800
+
+    Use the same LDADD for all the tests.
+
+commit 177a1cdc27aa0e35b025a8106b4f8e85c8ab580b
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Feb 17 14:23:03 2011 -0800
+
+    Make myself the contact for bugs.
+
+commit 65ce7a143a9c02a4d83f1dcf87ce940dbbf13336
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Feb 14 23:18:06 2011 -0800
+
+    Limit the tests to the key-file backend.
+
+commit efa1fe526267db2f5e2dbbdbdf4709c3360009a1
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Feb 14 15:22:13 2011 -0800
+
+    Include git.mk to auto-generate .gitignore.
+
+commit a6c3da8f790a17afbc4bcf9317f16d018543d7d8
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Mon Feb 14 14:08:31 2011 -0800
+
+    Point the tests to the uninstalled plugin.
+    
+    This lets us run tests without having to install and means we don't need to
+    manually set QT_PLUGIN_PATH when running the tests (in case our PREFIX is
+    unusual).
+
+commit c79f7ee9f862606c5183c6326ea77ae713cd4655
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Feb 10 16:51:41 2011 -0800
+
+    Set up initial test suite and added first test.
+
+commit ce1ee98076b36a2b2c337f7d2e462132053d6f2b
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Thu Feb 10 08:40:02 2011 -0800
+
+    Get contact/account info purely through folks-telepathy.
+    
+    This lets us remove the TpAccountManager (which simplifies things a bit).
+
+commit 30fdbd8bcddb58a99db8d5037a9f33808ccf7ff3
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Wed Feb 9 11:19:02 2011 -0800
+
+    Update copyright and add myself as an author.
+
+commit 1e869628ca1cebc0783c285d8925868f9a0ae77f
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Feb 8 16:41:50 2011 -0800
+
+    Update for removal of FolksIndividual URL utility functions.
+
+commit 1867d4c9d9ba3167f91c652b2c96dbc4098b3f72
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Feb 8 15:19:43 2011 -0800
+
+    Update for removal of FolksIndividual gender utility functions.
+
+commit 2fe5205bf8065de0bd5f071f9084beef38cc2f69
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Feb 8 15:14:17 2011 -0800
+
+    Update for rename of FolksAvatar -> FolksAvatarOwner.
+
+commit 063ac8af8c7cec8b9bf7600f3bd868b1d39c3024
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Feb 8 15:11:11 2011 -0800
+
+    Update for removal of FolksIndividual name utility functions.
+
+commit e32e2076e246cfb8a244826c25ac9a9f50e8d3c0
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Feb 8 15:03:57 2011 -0800
+
+    Update for rename of FolksPresence -> FolksPresenceOwner.
+
+commit 7ac2cd811199a323b4c00fe28af6ef3978464799
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Feb 8 15:01:10 2011 -0800
+
+    Update for removal of folks_individual_get_alias.
+
+commit 10070d986a823545810c8e1d90f2ffb48f5e5aa1
+Author: Travis Reitter <travis.reitter@collabora.co.uk>
+Date:   Tue Feb 8 14:49:06 2011 -0800
+
+    Simplify the check for QtContacts.
+
+commit 25919afdbd7eeeade737155cf64acc30cc80b178
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Nov 16 15:54:38 2010 +0000
+
+    Don't show the self contact
+
+commit 581c421dc550adf76a56baf54e7382f5292a26e0
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Nov 15 11:56:57 2010 +0000
+
+    Show extra information in the demo
+
+commit 4008078fa6026ef9d3f0bac126914127f703c70a
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Wed Nov 10 13:53:22 2010 +0000
+
+    Add the details coming from FolksNames and FolksExtendedInfo
+
+commit 312fe05f17ef7e0ad214f375e2dff07dfa8d2189
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Wed Nov 3 13:12:46 2010 +0000
+
+    Don't show any presence message when the presence status is unknown
+
+commit 5a65fd1903ff4818fbd2ee80110bddeee019ee7c
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Wed Oct 6 08:54:40 2010 +0100
+
+    Use a white background for the avatar if an avatar is set
+
+commit 396ec3826373c128274bc5fa98b42c347756bbdf
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Wed Oct 6 09:39:16 2010 +0200
+
+    Use smooth scaling for the avatar image
+
+commit 554f51e0e6c5e3f8d7775a1b307b4eb52ac3a79f
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Wed Oct 6 09:29:38 2010 +0200
+
+    Port to libfolks 0.3
+
+commit c85d4096cfe827a9d645deb78298d59c410f5759
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Oct 4 21:42:06 2010 +0200
+
+    Add a comment about signal handling
+
+commit 869db8bd04859b32780bfd356133d231c9ef15cb
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 30 20:40:07 2010 +0100
+
+    Don't use the im-addresses property to know the TpfPersona's ID
+    
+    We can get the ID with tp_persona_get_display_id() and the protocol from
+    the TpAccount.
+
+commit 54e4cb73d8e9b7d5a550dce47961f03671776a22
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 30 20:29:28 2010 +0100
+
+    Explain why I didn't implement capabilities
+
+commit 17324fb3fca632fac9d28047a5662d70addf2557
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 30 20:20:42 2010 +0100
+
+    Rename ContactModel's getAccountsForContact to accountsForContact
+
+commit c8f7fcf07cadcdeebe8df5900f8eb65dbfead362
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 30 20:12:39 2010 +0100
+
+    Change the colour of the buttons when they are pressed
+
+commit bd0842d2b43eff0b66dd7289b04c369f07938abe
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 30 19:55:16 2010 +0100
+
+    Align the account details properly
+
+commit 75e71aac78fba316ebdf9f7cb3b60d86b258c46a
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 30 19:43:52 2010 +0100
+
+    Allow to start a chat/call from the contact list
+
+commit 437a4fb304c8d5a00341a97536cb7104bab81246
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 30 19:42:31 2010 +0100
+
+    Store the account path in the QContactOnlineAccounts
+
+commit 089814394b9d608f77eedeeed1a8e917c10db914
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Wed Sep 29 20:25:49 2010 +0100
+
+    Fix a typo (setPrenceDetail -> setPresenceDetail)
+
+commit 832868edb2658d4ea9ad76b485c45ea8825bdaaa
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Wed Sep 29 20:24:27 2010 +0100
+
+    Remove account details and presence when FolksPersonas are removed
+
+commit 49f8c08411d061a2bc3b4e4ebb75b257e6af5950
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 28 19:20:33 2010 +0100
+
+    Set the parent of the contact list
+
+commit 61de96bcb99b58401687ad737501a588f1854ad1
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 28 19:09:54 2010 +0100
+
+    Make the handling of account details cleaner in the demo
+
+commit d780a7ee8f903f419595d68a3e50a363f11ea8f5
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Sep 27 19:08:53 2010 +0100
+
+    Update the UI when a contact detail changes
+
+commit 068524ec00f093995dd22f6e03bb27cc3ab0902f
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Sep 27 18:40:20 2010 +0100
+
+    Keep the presence and alias of single account details updated
+
+commit be4b40b8626aad1dbf74a7a00f66279754ce2917
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Sep 27 15:50:26 2010 +0100
+
+    Support the single account details to the contacts and display them
+
+commit ff74206d4bd9cc7cec4029cfff0f5939746de176
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 17:34:39 2010 +0100
+
+    Remove the group heading for now
+    
+    Groups are not supported (yet) by the folks backend, moreover the
+    heading exposes some weird bug with the list view.
+
+commit 3f395a9f21174c8aad573d35d8f7f93c0f4c329e
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 17:19:59 2010 +0100
+
+    Use QContact.localId() instead of QContact.id().localId()
+
+commit 6ca255570149e21cf9d69402eb0571620953a9fd
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 17:17:50 2010 +0100
+
+    Don't set any presence icon for contacts without a global presence
+
+commit b7895c793110ed023a0798f4e740d25789e8564f
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 17:08:37 2010 +0100
+
+    Remove an unused variable from the demo's Makefile.am
+
+commit e280599cbc94efccbd9861aaf208c22931f24f56
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 17:08:19 2010 +0100
+
+    Move some header inclusions from the .h file to the .cpp file
+
+commit 20b89c7cf546b3caf1e666e8cc238450dcda568a
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 17:02:51 2010 +0100
+
+    Remove the workaround for the wrong order of removal of contacts
+    
+    See GNOME bug #629642, it's fixed in the version of libfolks we depend
+    on.
+
+commit e59e347610d32a56eab77d568c2e49aa4766494a
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 17:05:49 2010 +0100
+
+    Depend on libfolks 0.2.1.20100922 as it has some fixes we need
+
+commit 75c452a6f4b21dbb0bfaab941b5fffbd5a053f4a
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 17:00:50 2010 +0100
+
+    Implement the assignment operator for ContactPair
+
+commit 7fd132b973e8c04a7f26f414094976be9fb0814b
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Thu Sep 23 15:32:13 2010 +0100
+
+    Make the details update to reflect changes in the FolksIndividual
+
+commit 5b8c71c6d1adf6d49d5dc1fe9c01d9ad8dfc6875
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Wed Sep 22 17:32:11 2010 +0100
+
+    Add support for the avatar
+
+commit ef0552075705e08af5408ce3cc8ccdb85befccae
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 21 18:27:33 2010 +0100
+
+    Show presence message and icon in the demo
+
+commit 6a7e030a37acf6ccd25de603fb5e94f26bf1f595
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 21 17:31:51 2010 +0100
+
+    Add a demo UI program
+
+commit 5ba46fc0ef39b2b0da592bc106ecd2bd9b2bc073
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 21 17:15:11 2010 +0100
+
+    Implement contacts() and contactIds() on the manager engine
+
+commit 673cc3c6171013d1026151f530dc5dba14346c78
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 14 17:21:42 2010 +0100
+
+    Fix the flags for QtMobility and QtContacts
+
+commit 4e32d3198db418180dfd4cc6ca6cbf62e1edf1ea
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 14 14:28:07 2010 +0100
+
+    Consistently use the m_ prefix for private members
+
+commit 421241c09cf39cdd2b2cf41ede1dfc55f2d948ff
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 14 13:16:18 2010 +0100
+
+    Workaround GNOME bug #629642
+
+commit e428be33f91498070917a5533e20717ed38fcb81
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Tue Sep 14 12:45:53 2010 +0100
+
+    Add debugging info to track the addition/removal of individuals
+
+commit f0fdaf411c20d4ebb10ab6655ed12846bb3441b8
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Sep 13 19:28:01 2010 +0100
+
+    Rename utils.h to glib-utils.h
+
+commit 31f60c1501dc621ea51a6ef48cdd046d6055b620
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Sep 13 19:26:28 2010 +0100
+
+    Show the contacts coming from libfolks
+
+commit 95aada1a7903684cc0460398c116d39585079904
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Sep 13 19:21:15 2010 +0100
+
+    Add functions to make the use in C++ of g_object_(un)ref less painful
+
+commit a1bcfe6fd30f8359884a7a33b2a8f5f2689cd194
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Sep 13 12:18:44 2010 +0100
+
+    Add foreach_glist() to iterate over GLists
+
+commit da70660dcabbbbc25b8145808e900c4e50bf4793
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Mon Sep 13 11:47:18 2010 +0100
+
+    Add a basic implementation of some of the required methods
+
+commit 5e2c5f217e3c261206f2527f8addec937ea69c7a
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Fri Sep 10 15:24:20 2010 +0100
+
+    Print the requested parameters when creating a new engine
+
+commit 4e066c54a8ea9f85e13aec9c8304ba2701719a3e
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Fri Sep 10 15:23:44 2010 +0100
+
+    Add debugging support
+
+commit 6b149ba7bd6a495557e0a9f29de890058cab5d3f
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Fri Sep 10 14:17:02 2010 +0100
+
+    Add a stub for the manager engine and its factory
+
+commit 09356898ff8b9aa3210e5d7a46354487aec94160
+Author: Marco Barisione <marco.barisione@collabora.co.uk>
+Date:   Fri Sep 10 14:13:57 2010 +0100
+
+    Initial stub

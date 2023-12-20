@@ -1,0 +1,37 @@
+Overview of changes from qt-folks 0.2.2 to qt-folks 0.2.3
+=========================================================
+
+Major changes:
+
+Overview of changes from qt-folks 0.2.1 to qt-folks 0.2.2
+=========================================================
+
+Major changes:
+* Avoid excessive FolksPostalAddress unref which could cause segfaults in
+  clients
+* Update to Folks 0.6.0
+* Properly initialize the GType type system
+
+Overview of changes from qt-folks 0.2.0 to qt-folks 0.2.1
+=========================================================
+
+Major changes:
+* Install the demo
+* Update to Folks 0.5.1
+
+Overview of changes from qt-folks 0.1.1 to qt-folks 0.2.0
+=========================================================
+
+Major changes:
+* Distribute required files for the demo
+* Support async adding and saving edits to contacts
+* Significantly broaden the number of QContactDetails we support
+
+Overview of changes from <unreleased> to qt-folks 0.1.1
+=========================================================
+
+Major changes:
+* Initial release
+* Move to the MeeGo Gitorious infrastructure
+* Update to TelepathyQt4 0.5.x
+* Update to Folks 0.4.x
