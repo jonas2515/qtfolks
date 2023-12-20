@@ -51,3 +51,4 @@ enable_testing()
 
 add_subdirectory(qt-folks)
 add_subdirectory(demo)
+add_subdirectory(demo2)
