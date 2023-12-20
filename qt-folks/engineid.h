@@ -20,26 +20,25 @@
 #ifndef ENGINEID_H
 #define ENGINEID_H
 
-#include <qcontactengineid.h>
 #include <QMap>
 
+QT_USE_NAMESPACE
 QTCONTACTS_USE_NAMESPACE
 
 namespace Folks
 {
 
-class EngineId : public QContactEngineId
+class EngineId : public QSharedData
 {
 public:
     EngineId(const QString &folksId, const QString &managerUri);
     EngineId(const QMap<QString, QString> &parameters, const QString &folksId);
 
-    bool isEqualTo(const QContactEngineId *other) const;
-    bool isLessThan(const QContactEngineId *other) const;
+    bool isEqualTo(const EngineId *other) const;
+    bool isLessThan(const EngineId *other) const;
 
     QString managerUri() const;
 
-    QContactEngineId* clone() const;
 
     QString toString() const;
 

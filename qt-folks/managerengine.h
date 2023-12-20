@@ -18,13 +18,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#include <telepathy-glib/account-manager.h>
 #include "glib-utils.h"
-#include <folks/folks-telepathy.h>
+#include <folks/folks.h>
 #include <QObject>
 #include <QContactManagerEngine>
 #include <QContactManagerEngineFactoryInterface>
 #include <QContactPresence>
+#include "contactnotifier.h"
 
 #define protected _protected
 #include <folks/folks.h>
@@ -98,13 +98,15 @@ public:
             QContactManager::Error* error);
     ~ManagerEngine();
 
-    QString managerName() const { return QLatin1String(FOLKS_MANAGER_NAME); }
-    int managerVersion() const { return 1; }
+    QString managerName() const { qWarning("contacts manager name req"); return QLatin1String("org.nemomobile.contacts.sqlite"); }
+    int managerVersion() const { qWarning("contacts manager ver req");  return 1; }
 
     QList<QContactType::TypeValues> supportedContactTypes() const {
+qWarning("contacts manager supported req"); 
         return QList<QContactType::TypeValues>() << QContactType::TypeContact;
     }
     QList<QVariant::Type> supportedDataTypes() const {
+qWarning("contacts manager supported data req"); 
         return QList<QVariant::Type>() << QVariant::String;
     }
 
@@ -119,9 +121,56 @@ public:
             const QList<QContactSortOrder>& sortOrders,
             const QContactFetchHint& fetchHint,
             QContactManager::Error *error) const;
+
+    QList<QContact> contacts(
+                const QList<QContactId> &localIds,
+                const QContactFetchHint &fetchHint,
+                QMap<int, QContactManager::Error> *errorMap,
+                QContactManager::Error *error) const override;
+    QList<QContact> contacts(
+                const QContactFilter &filter,
+                const QList<QContactSortOrder> &sortOrders,
+                const QContactFetchHint &fetchHint,
+                QMap<int, QContactManager::Error> *errorMap,
+                QContactManager::Error *error) const;
+    bool saveContacts(
+                QList<QContact> *contacts,
+                QMap<int, QContactManager::Error> *errorMap,
+                QContactManager::Error *error) override;
+    bool removeContact(const QContactId& contactId, QContactManager::Error* error);
+    bool removeContacts(
+                const QList<QContactId> &contactIds,
+                QMap<int, QContactManager::Error> *errorMap,
+                QContactManager::Error* error) override;
+
+
+    QContactId selfContactId(QContactManager::Error* error) const override;
+    bool setSelfContactId(const QContactId& contactId, QContactManager::Error* error) override;
+
+    QContactCollectionId defaultCollectionId() const override;
+    QContactCollection collection(const QContactCollectionId &collectionId, QContactManager::Error *error) const override;
+    QList<QContactCollection> collections(QContactManager::Error *error) const override;
+
     virtual QContact compatibleContact (const QContact & original,
             QContactManager::Error * error ) const;
 
+private slots:
+/*
+    void _q_collectionsAdded(const QVector<quint32> &collectionIds);
+    void _q_collectionsChanged(const QVector<quint32> &collectionIds);
+    void _q_collectionsRemoved(const QVector<quint32> &collectionIds);
+    void _q_collectionContactsChanged(const QVector<quint32> &collectionIds);
+*/
+    void _q_contactsChanged(const QVector<quint32> &contactIds);
+    void _q_contactsPresenceChanged(const QVector<quint32> &contactIds);
+    void _q_contactsAdded(const QVector<quint32> &contactIds);
+    void _q_contactsRemoved(const QVector<quint32> &contactIds);
+/*
+    void _q_selfContactIdChanged(quint32,quint32);
+    void _q_relationshipsAdded(const QVector<quint32> &contactIds);
+    void _q_relationshipsRemoved(const QVector<quint32> &contactIds);
+    void _q_displayLabelGroupsChanged();
+*/
 private:
     QContactPresence::PresenceState folksToQtPresence(FolksPresenceType fp);
     QContactId addIndividual(FolksIndividual *individual);
@@ -152,6 +201,9 @@ private:
     };
 
     FolksIndividualAggregator *m_aggregator;
+    ContactNotifier *m_notifier;
+
+    bool m_initialIndividualsAdded;
 
     QMap<QContactId, ContactPair> m_allContacts;
     QMap<FolksIndividual *, QContactId> m_individualsToIds;
@@ -282,8 +334,8 @@ typedef struct
             FolksIndividual *individual);
     void updatePersonas(QContact& contact, FolksIndividual *individual,
             GeeSet *added, GeeSet *removed);
-    void addAccountDetails(QContact& contact, TpfPersona *persona);
-    void removeAccountDetails(QContact& contact, TpfPersona *persona);
+//    void addAccountDetails(QContact& contact, TpfPersona *persona);
+  //  void removeAccountDetails(QContact& contact, TpfPersona *persona);
 
     void updateDisplayLabelFromIndividual(QContact& contact,
             FolksIndividual *individual);
@@ -297,7 +349,7 @@ typedef struct
 
     static void managerReadyCb(GObject *sourceObject, GAsyncResult *result,
             gpointer userData);
-    TpAccount *getAccountForTpContact(TpContact *tpContact);
+//    TpAccount *getAccountForTpContact(TpContact *tpContact);
 
     template<typename DetailType, typename FolkType>
     bool setPresenceDetail(DetailType& detail, FolkType *folk);
@@ -346,7 +398,7 @@ public:
     QContactManagerEngine* engine(const QMap<QString, QString>& parameters,
             QContactManager::Error* error);
     QString managerName() const;
-    QContactEngineId *createContactEngineId(const QMap<QString, QString> &parameters, const QString &idString) const;
+//    QContactEngineId *createContactEngineId(const QMap<QString, QString> &parameters, const QString &idString) const;
 };
 
 } // namespace Folks

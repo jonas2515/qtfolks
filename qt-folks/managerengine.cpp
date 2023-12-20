@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#include <folks/folks-telepathy.h>
+#include <folks/folks.h>
 #include <QFile>
 #include <QContactAddress>
 #include <QContactAvatar>
@@ -34,8 +34,11 @@
 #include <QContactOrganization>
 #include <QContactPhoneNumber>
 #include <QContactUrl>
+#include <QContactDisplayLabel>
+#include <QContactIntersectionFilter>
+#include <QContactDetailFilter>
+#include <QContactCollectionFilter>
 #include "managerengine.h"
-#include "engineid.h"
 #include "debug.h"
 #include "utils.h"
 
@@ -107,12 +110,30 @@ static void setContextsFromFieldDetails(QContactDetail &contactDetail,
 namespace Folks
 {
 
+
+static guint _folks_abstract_field_details_hash_data_func (gconstpointer v, gpointer self)
+{
+    const FolksAbstractFieldDetails *constDetails = static_cast<const FolksAbstractFieldDetails*>(v);
+    return folks_abstract_field_details_hash_static (const_cast<FolksAbstractFieldDetails*>(constDetails));
+}
+
+static int _folks_abstract_field_details_equal_data_func (gconstpointer a, gconstpointer b, gpointer self)
+{
+    const FolksAbstractFieldDetails *constDetailsA = static_cast<const FolksAbstractFieldDetails*>(a);
+    const FolksAbstractFieldDetails *constDetailsB = static_cast<const FolksAbstractFieldDetails*>(b);
+    return folks_abstract_field_details_equal_static (const_cast<FolksAbstractFieldDetails*>(constDetailsA), const_cast<FolksAbstractFieldDetails*>(constDetailsB));
+}
+
 #define SET_AFD_NEW() \
-        GEE_SET(gee_hash_set_new( \
-                    FOLKS_TYPE_ABSTRACT_FIELD_DETAILS, \
-                    (GBoxedCopyFunc) g_object_ref, g_object_unref, \
-                    (GHashFunc) folks_abstract_field_details_hash, \
-                    (GEqualFunc) folks_abstract_field_details_equal))
+    GEE_SET(gee_hash_set_new(FOLKS_TYPE_ABSTRACT_FIELD_DETAILS, \
+                             (GBoxedCopyFunc) g_object_ref, g_object_unref, \
+                             _folks_abstract_field_details_hash_data_func, \
+                             NULL, \
+                             NULL, \
+                             _folks_abstract_field_details_equal_data_func, \
+                             NULL, \
+                             NULL))
+
 
 template <class T>
 bool checkDetailsChanged(QContact originalContact, QContact modifiedContact)
@@ -525,6 +546,16 @@ void noteDetailChangeCb(GObject *detail, GAsyncResult *result, gpointer userdata
     }
 }
 
+static guint my_g_str_hash (gconstpointer v, gpointer self)
+{
+    return g_str_hash (v);
+}
+
+static int my_g_str_equal (gconstpointer a, gconstpointer b, gpointer self)
+{
+    return g_str_equal (a, b);
+}
+
 void phoneNumberDetailChangeCb(GObject *detail, GAsyncResult *result, gpointer userdata)
 {
     if (result) {
@@ -549,6 +580,24 @@ void phoneNumberDetailChangeCb(GObject *detail, GAsyncResult *result, gpointer u
         QList<QContactOnlineAccount> accounts =
             data->contact.details<QContactOnlineAccount>();
 
+GeeMultiMap *imAddressHash =
+    GEE_MULTI_MAP(gee_hash_multi_map_new(G_TYPE_STRING,\
+                                         (GBoxedCopyFunc) g_strdup, g_free, \
+                                         FOLKS_TYPE_IM_FIELD_DETAILS, \
+                                         (GBoxedCopyFunc)g_object_ref, g_object_unref, \
+                                         my_g_str_hash, \
+                                         NULL, \
+                                         NULL, \
+                                         my_g_str_equal, \
+                                         NULL, \
+                                         NULL, \
+                                         _folks_abstract_field_details_hash_data_func, \
+                                         NULL, \
+                                         NULL, \
+                                         _folks_abstract_field_details_equal_data_func, \
+                                         NULL, \
+                                         NULL));
+/*
         GeeMultiMap *imAddressHash = GEE_MULTI_MAP(
                 gee_hash_multi_map_new(G_TYPE_STRING, (GBoxedCopyFunc) g_strdup,
                         g_free,
@@ -557,6 +606,7 @@ void phoneNumberDetailChangeCb(GObject *detail, GAsyncResult *result, gpointer u
                         g_str_hash, g_str_equal,
                         (GHashFunc) folks_abstract_field_details_hash,
                         (GEqualFunc) folks_abstract_field_details_equal));
+*/
 
         foreach(const QContactOnlineAccount& account, accounts) {
             if(!account.isEmpty()) {
@@ -799,13 +849,35 @@ ManagerEngine::ManagerEngine(
         const QMap<QString, QString>& parameters,
         QContactManager::Error* error)
 {
-    g_type_init();
-    m_aggregator = folks_individual_aggregator_new();
+        qWarning() << "contacts new engine creating";
+
+    m_aggregator = folks_individual_aggregator_dup();
     C_CONNECT(m_aggregator, "individuals-changed", individualsChangedCb);
     folks_individual_aggregator_prepare(
             m_aggregator,
             (GAsyncReadyCallback) STATIC_C_HANDLER_NAME(aggregatorPrepareCb),
             this);
+
+  m_notifier = new ContactNotifier(false);
+          /*      notifier->connect("collectionsAdded", "au", this, SLOT(_q_collectionsAdded(QVector<quint32>)));
+                notifier->connect("collectionsChanged", "au", this, SLOT(_q_collectionsChanged(QVector<quint32>)));
+                notifier->connect("collectionsRemoved", "au", this, SLOT(_q_collectionsRemoved(QVector<quint32>)));
+                notifier->connect("collectionContactsChanged", "au", this, SLOT(_q_collectionContactsChanged(QVector<quint32>)));
+
+                notifier->connect("contactsAdded", "au", this, SLOT(_q_contactsAdded(QVector<quint32>)));
+                notifier->connect("contactsChanged", "au", this, SLOT(_q_contactsChanged(QVector<quint32>)));
+                notifier->connect("contactsPresenceChanged", "au", this, SLOT(_q_contactsPresenceChanged(QVector<quint32>)));
+                notifier->connect("contactsRemoved", "au", this, SLOT(_q_contactsRemoved(QVector<quint32>)));
+                notifier->connect("selfContactIdChanged", "uu", this, SLOT(_q_selfContactIdChanged(quint32,quint32)));
+                notifier->connect("relationshipsAdded", "au", this, SLOT(_q_relationshipsAdded(QVector<quint32>)));
+                notifier->connect("relationshipsRemoved", "au", this, SLOT(_q_relationshipsRemoved(QVector<quint32>)));
+                notifier->connect("displayLabelGroupsChanged", "", this, SLOT(_q_displayLabelGroupsChanged()));
+*/
+
+  while (!m_initialIndividualsAdded)
+    g_main_context_iteration (g_main_context_default(), TRUE);
+
+        qWarning() << "contacts new engine creation finished";
 }
 
 ManagerEngine::~ManagerEngine()
@@ -815,6 +887,10 @@ ManagerEngine::~ManagerEngine()
 
 void ManagerEngine::aggregatorPrepareCb()
 {
+qWarning("contacts aggregator has prepared");
+
+//  if (error)
+  //  g_warning ("Failed to load Folks contacts: %s", error->message);
 }
 
 void ManagerEngine::updateDisplayLabelFromIndividual(
@@ -871,6 +947,20 @@ void ManagerEngine::updateNameFromIndividual(
             contact.saveDetail(&displayLabelDetail);
         }
 
+        // yay, gnome-contacts only sets the structured name once on contact creation,
+        // then never updates it (instead only updating the full name)
+        // until that's fixed, let's always go with the full name as QContactName
+        if(fullName) {
+            QStringList names = QString::fromUtf8(fullName).split(' ');
+            if (names.length() == 2) {
+                name.setFirstName(names.at(0));
+                name.setLastName(names.at(1));
+            } else {
+                name.setFirstName(QString::fromUtf8(fullName));
+            }
+            contact.saveDetail(&name);
+        }
+        /*
         if(sn) {
             name.setFirstName(QString::fromUtf8(folks_structured_name_get_given_name(sn)));
             name.setLastName(QString::fromUtf8(folks_structured_name_get_family_name(sn)));
@@ -879,7 +969,7 @@ void ManagerEngine::updateNameFromIndividual(
             name.setSuffix(QString::fromUtf8(folks_structured_name_get_suffixes(sn)));
             contact.saveDetail(&name);
         }
-
+        */
     }
 }
 
@@ -927,6 +1017,7 @@ QContactPresence ManagerEngine::getPresenceForPersona(
         QContact& contact,
         FolksPersona *persona)
 {
+/*
     if(TPF_IS_PERSONA(persona)) {
         QString presenceUri = getPersonaPresenceUri(persona);
         foreach(const QContactPresence& presence,
@@ -935,7 +1026,7 @@ QContactPresence ManagerEngine::getPresenceForPersona(
                 return presence;
         }
     }
-
+*/
     return QContactPresence();
 }
 
@@ -961,7 +1052,8 @@ void ManagerEngine::avatarReadyCB(GObject *source, GAsyncResult *res, gpointer u
         avatar.setImageUrl(data->url);
         pair.contact.saveDetail(&avatar);
         debug() << "AvatarImage (UPDATE):" << data->url;
-        emit data->this_->contactsChanged(QList<QContactId>() << data->contactId);
+    // TODO: also emit the detail types..
+        emit data->this_->contactsChanged(QList<QContactId>() << data->contactId, QList<QContactDetail::DetailType>());
     }
 
     g_free(data);
@@ -1293,6 +1385,7 @@ void ManagerEngine::updatePersonas(
     iter = gee_iterable_iterator(GEE_ITERABLE(added));
     while(gee_iterator_next(iter)) {
         FolksPersona *persona = FOLKS_PERSONA(gee_iterator_get(iter));
+#if 0
         if(TPF_IS_PERSONA(persona)) {
             m_personasToIndividuals.insertMulti(persona, individual);
 
@@ -1308,8 +1401,9 @@ void ManagerEngine::updatePersonas(
                  * presence too */
                 CONNECT_PERSONA_NOTIFY("alias");
 
-            addAccountDetails(contact, TPF_PERSONA(persona));
+            //addAccountDetails(contact, TPF_PERSONA(persona));
         }
+#endif
         g_object_unref(persona);
     }
     g_object_unref (iter);
@@ -1319,12 +1413,13 @@ void ManagerEngine::updatePersonas(
     iter = gee_iterable_iterator(GEE_ITERABLE(removed));
     while(gee_iterator_next(iter)) {
         FolksPersona *persona = FOLKS_PERSONA(gee_iterator_get(iter));
+#if 0
         if(TPF_IS_PERSONA(persona)) {
             // TODO: no need to do this anymore, use the folks id
             if(m_individualsToIds.contains(individual)) {
                 QContactId contactId = m_individualsToIds[individual];
                 ContactPair& contactPair = m_allContacts[contactId];
-                removeAccountDetails(contactPair.contact, TPF_PERSONA(persona));
+                //removeAccountDetails(contactPair.contact, TPF_PERSONA(persona));
 
                 QPair<FolksIndividual *, FolksPersona *> pair(individual,
                         persona);
@@ -1336,12 +1431,13 @@ void ManagerEngine::updatePersonas(
                 m_personasToIndividuals.remove(persona, individual);
             }
         }
+#endif
 
         g_object_unref(persona);
     }
     g_object_unref (iter);
 }
-
+#if 0
 void ManagerEngine::addAccountDetails(
         QContact& contact,
         TpfPersona *persona)
@@ -1410,6 +1506,7 @@ void ManagerEngine::removeAccountDetails(
     if(!presence.isEmpty())
         contact.removeDetail(&presence);
 }
+#endif
 
 QString ManagerEngine::getPersonaPresenceUri(
         FolksPersona *persona)
@@ -1433,6 +1530,7 @@ void ManagerEngine::individualsChangedCb(
         FolksPersona *actor,
         FolksGroupDetailsChangeReason reason)
 {
+qWarning("contacts manager got individualsChangedCb");
     QList<QContactId> removedIds;
     QList<QContactId> addedIds;
 
@@ -1443,6 +1541,7 @@ void ManagerEngine::individualsChangedCb(
     while(gee_iterator_next(iter)) {
         FolksIndividual *individual = FOLKS_INDIVIDUAL(gee_iterator_get(iter));
         QContactId id = removeIndividual(individual);
+qWarning("contact got removed id : %s", qPrintable(id.toString()));
         if(!id.isNull())
             removedIds << id;
 
@@ -1454,6 +1553,8 @@ void ManagerEngine::individualsChangedCb(
     while(gee_iterator_next(iter)) {
         FolksIndividual *individual = FOLKS_INDIVIDUAL(gee_iterator_get(iter));
         QContactId id = addIndividual(individual);
+qWarning("contact got added id : %s", qPrintable(id.toString()));
+
         if(!id.isNull())
             addedIds << id;
 
@@ -1461,10 +1562,20 @@ void ManagerEngine::individualsChangedCb(
     }
     g_object_unref (iter);
 
-    if(!removedIds.isEmpty())
+    if(!removedIds.isEmpty()) {
+qWarning("contacts manager emitting contacts removed");
+        m_notifier->contactsRemoved(removedIds);
         emit contactsRemoved(removedIds);
-    if(!addedIds.isEmpty())
+}
+
+    if(!addedIds.isEmpty()) {
+qWarning("contacts manager emitting contacts added");
+        m_notifier->contactsAdded(addedIds);
         emit contactsAdded(addedIds);
+//        emit dataChanged(); // big hammer
+}
+
+  m_initialIndividualsAdded = true;
 }
 
 QContactPresence::PresenceState ManagerEngine::folksToQtPresence(
@@ -1492,25 +1603,47 @@ QContactPresence::PresenceState ManagerEngine::folksToQtPresence(
         return QContactPresence::PresenceUnknown;
     }
 }
+QByteArray dbIdToByteArray(quint32 dbId, bool isCollection = false)
+{
+    return isCollection ? (QByteArrayLiteral("col-") + QByteArray::number(dbId))
+                        : (QByteArrayLiteral("sql-") + QByteArray::number(dbId));
+}
 
 QContactId ManagerEngine::addIndividual(
         FolksIndividual *individual)
 {
     QContact contact;
-    EngineId *engineId = new EngineId(QString::fromUtf8(folks_individual_get_id(individual)), managerUri());
-    QContactId contactId(engineId);
-    contact.setId(contactId);
+//    EngineId *engineId = new EngineId(QString::fromUtf8(folks_individual_get_id(individual)), managerUri());
+//    QContactId contactId(engineId);
+//    contact.setId(contactId);
+
+  /* alien tooling needs contacts to be in this collection and of this type because
+   * 1) it applies a filter for these two things when it calls contacts() and
+   * 2) it won't pick up any changes to contacts signalled via dbus otherwise
+   */
+QContactCollectionId colId = QContactCollectionId(managerUri(), dbIdToByteArray(1, true));
+
+    contact.setId(QContactId(managerUri(), dbIdToByteArray(qHash(QString::fromUtf8(folks_individual_get_id(individual))))));
+
+        QContactType type;
+        type.setType(QContactType::TypeContact);
+        contact.saveDetail(&type);
+
+
+        contact.setCollectionId(colId);
 
     if(folks_individual_get_is_user(individual)) {
         debug() << "Skipping self contact:"
-            << folks_alias_details_get_alias(FOLKS_ALIAS_DETAILS(individual))
+            << folks_name_details_get_full_name(FOLKS_NAME_DETAILS(individual))
             << individual;
         return QContactId();
     }
 
     debug() << "Added:"
-        << folks_alias_details_get_alias(FOLKS_ALIAS_DETAILS(individual))
-        << individual;
+        << folks_name_details_get_full_name(FOLKS_NAME_DETAILS(individual))
+        << individual
+        << qPrintable(QString::fromUtf8(folks_individual_get_id(individual)))
+        << qPrintable(colId.toString());
 
     C_NOTIFY_CONNECT(individual, "alias", aliasChangedCb);
     updateAliasFromIndividual(contact, individual);
@@ -1623,6 +1756,7 @@ QList<QContactId> ManagerEngine::contactIds(
         const QList<QContactSortOrder>& sortOrders,
         QContactManager::Error *error) const
 {
+qWarning("contacts someone requested IDS");
     QList<QContactId> ids;
     QContactManager::Error tmpError = QContactManager::NoError;
     QList<QContact> cnts = contacts(filter, sortOrders,
@@ -1640,6 +1774,7 @@ QList<QContactId> ManagerEngine::contactIds(
 QContact ManagerEngine::compatibleContact (const QContact & original,
         QContactManager::Error * error ) const
 {
+qWarning("contacts compatible contact req"); 
     // Let's keep all information about contact we will need that on EDS
     return original;
 }
@@ -1650,9 +1785,12 @@ QContact ManagerEngine::contact(
         QContactManager::Error* error) const
 {
     Q_UNUSED(fetchHint);
+qWarning("contacts SOMEONE requestioned a contacts");
 
     QContact contact = QContact();
     if(m_allContacts.contains(contactId)) {
+qWarning("contacts found it: id %s", qPrintable(contactId.toString()));
+
         ContactPair pair = m_allContacts[contactId];
         contact = pair.contact;
         *error = QContactManager::NoError;
@@ -1667,21 +1805,163 @@ QList<QContact> ManagerEngine::contacts(
         const QContactFetchHint& fetchHint,
         QContactManager::Error *error) const
 {
+qWarning("contacts SOMEONE requestioned contacts, filter type %d", filter.type());
+QList<QContactFilter> filters = ((QContactIntersectionFilter& )filter).filters();
+    foreach(QContactFilter f, filters) {
+qWarning("contacts internal filter: type %d", f.type());
+      if (f.type() == 1) {
+        const QVariant& v = ((QContactDetailFilter& )f).value();
+qWarning("contacts detail filter: detailType %d detailField %d, variant t %s", ((QContactDetailFilter& )f).detailType(), ((QContactDetailFilter& )f).detailField(), qPrintable(v.typeName()));
+        int url = v.toInt();
+qWarning("contacts url int: %d", url);
+  }
+
+      if (f.type() == 10) {
+        const QSet<QContactCollectionId> ids = ((QContactCollectionFilter& )f).collectionIds();
+    foreach(QContactCollectionId id, ids) {
+qWarning("contacts collection ID filter, id: %s", qPrintable(id.toString()));
+
+        }
+      }
+    }
+
     QList<QContact> cnts;
 
     foreach(const ContactPair& pair, m_allContacts) {
-        if(QContactManagerEngine::testFilter(filter, pair.contact))
+qWarning("contacts adding one to list");
+        /* no clue what that filter set by sailfish is, all we know is that ours don't pass it */
+        if(QContactManagerEngine::testFilter(filter, pair.contact)) {
+qWarning("contact passed the filter");
             QContactManagerEngine::addSorted(&cnts, pair.contact, sortOrders);
+}
     }
 
+qWarning("contacts done adding");
+/*
+    QContact contact;
+//    EngineId *engineId = new EngineId(QString::fromUtf8(folks_individual_get_id(individual)), managerUri());
+//    QContactId contactId(engineId);
+//    contact.setId(contactId);
+QContactId contactId = QContactId(managerUri(), QByteArrayLiteral("sql-") + QByteArray::number(0));
+    contact.setId(contactId);
+qWarning("contact added default test contact with id id : %s", qPrintable(contactId.toString()));
+        QContactPhoneNumber number;
+        number.setNumber(
+                QString::fromLatin1("004915234742285"));
+
+        contact.saveDetail(&number);
+
+        QContactName name;
+
+            name.setFirstName(QString::fromLatin1("tester"));
+            name.setLastName(QString::fromLatin1("testwssises"));
+            contact.saveDetail(&name);
+
+            QContactManagerEngine::addSorted(&cnts, contact, sortOrders);
+*/
     return cnts;
 }
+    QList<QContact> ManagerEngine::contacts(
+                const QList<QContactId> &localIds,
+                const QContactFetchHint &fetchHint,
+                QMap<int, QContactManager::Error> *errorMap,
+                QContactManager::Error *error) const
+{
+qWarning("contacts local ids not implemented");
+    QList<QContact> cnts;
+
+    return cnts;
+
+}
+
+QList<QContact> ManagerEngine::contacts(
+        const QContactFilter &filter,
+        const QList<QContactSortOrder> &sortOrders,
+        const QContactFetchHint &fetchHint,
+        QMap<int, QContactManager::Error> *errorMap,
+        QContactManager::Error *error) const
+{
+    Q_UNUSED(errorMap);
+qWarning("contacts contacts fetch order not implemented");
+
+    return contacts(filter, sortOrders, fetchHint, error);
+}
+
+bool ManagerEngine::saveContacts(
+            QList<QContact> *contacts,
+            QMap<int, QContactManager::Error> *errorMap,
+            QContactManager::Error *error)
+{
+qWarning("contacts safeContacts not implemented");
+
+    return false;
+}
+
+
+bool ManagerEngine::removeContact(const QContactId &contactId, QContactManager::Error* error)
+{
+    QMap<int, QContactManager::Error> errorMap;
+qWarning("contacts remove contacts implemented");
+
+return false;
+}
+
+bool ManagerEngine::removeContacts(
+            const QList<QContactId> &contactIds,
+            QMap<int, QContactManager::Error> *errorMap,
+            QContactManager::Error* error)
+{
+qWarning("contacts removed contacts 2 implemented");
+return false;
+}
+
+QContactId ManagerEngine::selfContactId(QContactManager::Error* error) const
+{
+qWarning("contacts self contact id implemented");
+QContactId contactId;
+    return contactId;
+}
+
+bool ManagerEngine::setSelfContactId(
+        const QContactId&, QContactManager::Error* error)
+{
+qWarning("contacts set self contact id implemented");
+
+    return false;
+}
+
+QContactCollectionId ManagerEngine::defaultCollectionId() const
+{
+qWarning("contacts default col id implemented");
+
+    return QContactCollectionId();
+}
+
+QContactCollection ManagerEngine::collection(
+        const QContactCollectionId &collectionId,
+        QContactManager::Error *error) const
+{
+qWarning("contacts default col() id implemented");
+
+    return QContactCollection();
+}
+
+QList<QContactCollection> ManagerEngine::collections(
+        QContactManager::Error *error) const
+{
+    QList<QContactCollection> collections;
+qWarning("contacts default cols() id implemented");
+
+    return collections;
+}
+
 
 void ManagerEngine::personasChangedCb(
         FolksIndividual *individual,
         GeeSet *added,
         GeeSet *removed)
 {
+qWarning("contacts got personas changed for an individual");
     if(!added && !removed)
         return;
 
@@ -1693,7 +1973,8 @@ void ManagerEngine::personasChangedCb(
     ContactPair& pair = m_allContacts[contactId];
     updatePersonas(pair.contact, individual, added, removed);
 
-    emit contactsChanged(QList<QContactId>() << contactId);
+        m_notifier->contactsChanged(QList<QContactId>() << contactId);
+    emit contactsChanged(QList<QContactId>() << contactId, QList<QContactDetail::DetailType>());
 }
 
 #define IMPLEMENT_INDIVIDUAL_NOTIFY_CALLBACK(cb, updateFunction) \
@@ -1708,7 +1989,8 @@ void ManagerEngine::personasChangedCb(
         ContactPair& pair = m_allContacts[contactId]; \
         updateFunction(pair.contact, individual); \
         \
-        emit contactsChanged(QList<QContactId>() << contactId); \
+        m_notifier->contactsChanged(QList<QContactId>() << contactId); \
+        emit contactsChanged(QList<QContactId>() << contactId, QList<QContactDetail::DetailType>()); \
     }
 
 IMPLEMENT_INDIVIDUAL_NOTIFY_CALLBACK(
@@ -1781,8 +2063,10 @@ IMPLEMENT_INDIVIDUAL_NOTIFY_CALLBACK(
             changedIds << contactId; \
         } \
         \
-        if(!changedIds.isEmpty()) \
-            emit contactsChanged(changedIds); \
+        if(!changedIds.isEmpty()) { \
+            m_notifier->contactsChanged(changedIds); \
+            emit contactsChanged(changedIds, QList<QContactDetail::DetailType>()); \
+        } \
     }
 
 IMPLEMENT_PERSONA_NOTIFY_CALLBACK(
@@ -1793,6 +2077,24 @@ IMPLEMENT_PERSONA_NOTIFY_CALLBACK(
 
 static GValue* asvSetStrNew(QMultiMap<QString, QString> providerUidMap)
 {
+GeeMultiMap *hashSet =
+    GEE_MULTI_MAP(gee_hash_multi_map_new(G_TYPE_STRING,\
+                                         (GBoxedCopyFunc) g_strdup, g_free, \
+                                         FOLKS_TYPE_IM_FIELD_DETAILS, \
+                                         (GBoxedCopyFunc)g_object_ref, g_object_unref, \
+                                         my_g_str_hash, \
+                                         NULL, \
+                                         NULL, \
+                                         my_g_str_equal, \
+                                         NULL, \
+                                         NULL, \
+                                         _folks_abstract_field_details_hash_data_func, \
+                                         NULL, \
+                                         NULL, \
+                                         _folks_abstract_field_details_equal_data_func, \
+                                         NULL, \
+                                         NULL));
+/*
     GeeMultiMap *hashSet = GEE_MULTI_MAP(
             gee_hash_multi_map_new(G_TYPE_STRING, (GBoxedCopyFunc) g_strdup,
                     g_free,
@@ -1801,7 +2103,7 @@ static GValue* asvSetStrNew(QMultiMap<QString, QString> providerUidMap)
                     g_str_hash, g_str_equal,
                     (GHashFunc) folks_abstract_field_details_hash,
                     (GEqualFunc) folks_abstract_field_details_equal));
-
+*/
     GValue *retval = gValueSliceNew (G_TYPE_OBJECT);
     g_value_take_object (retval, hashSet);
 
@@ -1927,9 +2229,10 @@ ManagerEngine::aggregatorAddPersonaFromDetailsCb(GObject *source,
     } else {
         individual = folks_persona_get_individual(persona);
         if (individual) {
-            EngineId *engineId = new EngineId(QString::fromUtf8(folks_individual_get_id(individual)), managerUri());
-            QContactId contactId(engineId);
-            contact.setId(contactId);
+//            EngineId *engineId = new EngineId(QString::fromUtf8(folks_individual_get_id(individual)), managerUri());
+//            QContactId contactId(engineId);
+//            contact.setId(contactId);
+    contact.setId(QContactId(managerUri(), dbIdToByteArray(qHash(QString::fromUtf8(folks_individual_get_id(individual))))));
         }
     }
 
@@ -1960,6 +2263,21 @@ ManagerEngine::aggregatorAddPersonaFromDetailsCb(GObject *source,
         PERSONA_DETAILS_INSERT((details), (key), (value)); \
     } \
 }
+
+
+static guint my_folks_role_hash (gconstpointer v, gpointer self)
+{
+    const FolksRole *constDetails = static_cast<const FolksRole*>(v);
+    return folks_role_hash (const_cast<FolksRole*>(constDetails));
+}
+
+static int my_folks_role_equal (gconstpointer a, gconstpointer b, gpointer self)
+{
+    const FolksRole *constDetailsA = static_cast<const FolksRole*>(a);
+    const FolksRole *constDetailsB = static_cast<const FolksRole*>(b);
+    return folks_role_equal (const_cast<FolksRole*>(constDetailsA), const_cast<FolksRole*>(constDetailsB));
+}
+
 
 /* free the returned GHashTable* with g_hash_table_destroy() */
 static GHashTable* personaDetailsHashFromQContact(
@@ -2158,7 +2476,8 @@ static GHashTable* personaDetailsHashFromQContact(
         value = gValueSliceNew(G_TYPE_OBJECT);
         GeeHashSet *hashSet = gee_hash_set_new(FOLKS_TYPE_ROLE,
             (GBoxedCopyFunc) g_object_ref, g_object_unref,
-            (GHashFunc) folks_role_hash, (GEqualFunc) folks_role_equal);
+            my_folks_role_hash, NULL, NULL,
+            my_folks_role_equal, NULL, NULL);
         g_value_take_object(value, hashSet);
         foreach(const QContactOrganization& org, orgs) {
             if(!org.isEmpty()) {
@@ -2461,12 +2780,14 @@ QContactManagerEngine* ManagerEngineFactory::engine(
 
 QString ManagerEngineFactory::managerName() const
 {
+
     return QLatin1String(FOLKS_MANAGER_NAME);
 }
-
+/*
 QContactEngineId *ManagerEngineFactory::createContactEngineId(const QMap<QString, QString> &parameters, const QString &idString) const
 {
     return new EngineId(parameters, idString);
 }
+*/
 
 } // namespace Folks

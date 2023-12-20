@@ -1,10 +1,12 @@
 
-set(qtfolks_SRCS managerengine.cpp engineid.cpp utils.cpp)
-set(qtfolks_HDRS debug.h  glib-utils.h  managerengine.h engineid.h utils.h)
+set(qtfolks_SRCS managerengine.cpp utils.cpp contactnotifier.cpp)
+set(qtfolks_HDRS debug.h  glib-utils.h  managerengine.h utils.h contactnotifier.h)
 
 include_directories(
     ${TP_QT5_INCLUDE_DIRS}
     ${GIO_INCLUDE_DIRS}
+    ${GLIB_INCLUDE_DIRS}
+
     ${FOLKS_INCLUDE_DIRS}
     ${FOLKS_TP_INCLUDE_DIRS}
     )
@@ -20,6 +22,7 @@ target_link_libraries(qtcontacts_folks
     ${GIO_LIBRARIES}
     ${Qt5Core_LIBRARIES}
     ${Qt5Contacts_LIBRARIES}
+    ${Qt5DBus_LIBRARIES}
     )
 
 install(TARGETS qtcontacts_folks LIBRARY DESTINATION ${QT_INSTALL_PLUGINS}/contacts)

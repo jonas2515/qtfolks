@@ -19,16 +19,10 @@
 
 #include <QAbstractListModel>
 #include <QContact>
-#include <TelepathyQt/Account>
 
 #ifndef CONTACT_MODEL_H
 #define CONTACT_MODEL_H
 
-QTCONTACTS_BEGIN_NAMESPACE
-class QContactManager;
-QTCONTACTS_END_NAMESPACE
-
-QT_USE_NAMESPACE
 QTCONTACTS_USE_NAMESPACE
 
 class ContactModel : public QAbstractListModel
@@ -70,12 +64,12 @@ private:
     template<typename PresenceDetail>
     QString presenceIconForDetail(PresenceDetail& presence) const;
 
-    bool setupIM(int row, QString *pContactId, Tp::AccountPtr *pAccount);
+    bool setupIM(int row, QString *pContactId);
 
 private slots:
     void contactsAdded(const QList<QContactId>& ids);
     void contactsRemoved(const QList<QContactId>& ids);
-    void contactsChanged(const QList<QContactId>& ids);
+    void contactsChanged(const QList<QContactId>& ids, const QList<QContactDetail::DetailType>& types);
 };
 
 #endif // CONTACT_MODEL_H

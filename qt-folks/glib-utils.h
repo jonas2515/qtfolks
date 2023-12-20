@@ -17,9 +17,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#include <QObject>
 #include <glib.h>
 #include <glib-object.h>
+//#include <QObject>
 
 #ifndef GLIB_UTILS_H
 #define GLIB_UTILS_H
@@ -64,8 +64,8 @@ void g_object_unref_cpp(T *t)
     return g_object_unref((gpointer)t);
 }
 
-#define g_object_ref g_object_ref_cpp
-#define g_object_unref g_object_unref_cpp
+//#define g_object_ref g_object_ref_cpp
+//#define g_object_unref g_object_unref_cpp
 
 inline GValue* gValueSliceNew(GType type)
 {

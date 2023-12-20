@@ -32,13 +32,13 @@
 #include <QContactNote>
 #include <QContactOrganization>
 #include <QContactPhoneNumber>
+#include <QContactDisplayLabel>
 #include <QContactUrl>
 #include <QDebug>
 #include <QDesktopServices>
 #include "contactmodel.h"
 //#include "_gen/contactmodel.moc.hpp"
 
-using namespace Tp;
 
 ContactModel::ContactModel(QObject *parent)
 : QAbstractListModel(parent)
@@ -54,8 +54,8 @@ ContactModel::ContactModel(QObject *parent)
             this, SLOT(contactsAdded(const QList<QContactId>&)));
     connect(m_manager, SIGNAL(contactsRemoved(const QList<QContactId>&)),
             this, SLOT(contactsRemoved(const QList<QContactId>&)));
-    connect(m_manager, SIGNAL(contactsChanged(const QList<QContactId>&)),
-            this, SLOT(contactsChanged(const QList<QContactId>&)));
+    connect(m_manager, SIGNAL(contactsChanged(const QList<QContactId>&,  const QList<QContactDetail::DetailType>&)),
+            this, SLOT(contactsChanged(const QList<QContactId>&, const QList<QContactDetail::DetailType>&)));
 
     // Model
     m_roles[DisplayNameRole] = "displayName";
@@ -152,6 +152,8 @@ QList<QContact> ContactModel::contactsFromIds(
 void ContactModel::contactsAdded(
         const QList<QContactId>& ids)
 {
+        qWarning() << "contactsAdded";
+
     QList<QContact> newContacts = contactsFromIds(ids);
     if(newContacts.isEmpty())
         return;
@@ -166,6 +168,7 @@ void ContactModel::contactsAdded(
 void ContactModel::contactsRemoved(
         const QList<QContactId>& ids)
 {
+        qWarning() << "contactsRevmoed";
     // FIXME: make this nicer and faster
     foreach(const QContactId& contactId, ids) {
         for(int i = m_contacts.size() - 1; i >= 0; i--) {
@@ -181,8 +184,10 @@ void ContactModel::contactsRemoved(
 }
 
 void ContactModel::contactsChanged(
-        const QList<QContactId>& ids)
+        const QList<QContactId>& ids,
+const QList<QContactDetail::DetailType>& types)
 {
+        qWarning() << "contactsChanged";
     // FIXME: make this nicer and faster
     QList<QContact> changedContacts = contactsFromIds(ids);
     foreach(const QContact& newContact, changedContacts) {
@@ -367,14 +372,11 @@ QStringList ContactModel::detailsForContact(
 
 bool ContactModel::setupIM(
         int row,
-        QString *pContactId,
-        AccountPtr *pAccount)
+        QString *pContactId)
 {
     Q_ASSERT(pContactId);
-    Q_ASSERT(pAccount);
 
     *pContactId = QLatin1String("");
-    *pAccount = AccountPtr();
 
     if(row < 0 || row > m_contacts.size())
         return false;
@@ -405,10 +407,8 @@ void ContactModel::startChat(
         int row)
 {
     QString contactId;
-    AccountPtr account;
-    if(setupIM(row, &contactId, &account)) {
+    if(setupIM(row, &contactId)) {
         qDebug() << "Starting chat with" << contactId;
-        account->ensureTextChat(contactId);
     }
 }
 
@@ -416,10 +416,8 @@ void ContactModel::startCall(
         int row)
 {
     QString contactId;
-    AccountPtr account;
-    if(setupIM(row, &contactId, &account)) {
+    if(setupIM(row, &contactId)) {
         qDebug() << "Starting call to" << contactId;
-        account->ensureStreamedMediaCall(contactId);
     }
 }
 

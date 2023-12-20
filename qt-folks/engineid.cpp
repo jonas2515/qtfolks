@@ -34,9 +34,8 @@ EngineId::EngineId(const QMap<QString, QString> &parameters, const QString &folk
     m_managerUri = QContactManager::buildUri("folks", parameters);
 }
 
-bool EngineId::isEqualTo(const QContactEngineId *other) const
+bool EngineId::isEqualTo(const EngineId *otherId) const
 {
-    const EngineId *otherId = dynamic_cast<const EngineId*>(other);
     if (!otherId) {
         return false;
     }
@@ -45,9 +44,8 @@ bool EngineId::isEqualTo(const QContactEngineId *other) const
 }
 
 
-bool EngineId::isLessThan(const QContactEngineId *other) const
+bool EngineId::isLessThan(const EngineId *otherId) const
 {
-    const EngineId *otherId = dynamic_cast<const EngineId*>(other);
     if (!otherId) {
         return false;
     }
@@ -61,10 +59,6 @@ QString EngineId::managerUri() const
     return m_managerUri;
 }
 
-QContactEngineId* EngineId::clone() const
-{
-    return new EngineId(m_folksId, m_managerUri);
-}
 
 QString EngineId::toString() const
 {

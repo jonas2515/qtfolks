@@ -35,16 +35,14 @@ Item {
         model: contactModel
         delegate: ContactDelegate {}
 
-        highlight {
-            Rectangle {
-                width: contactList.width - 1
-                border {
-                    width: 1
-                    color: "gray"
-                }
-                color: "lightgray"
-                radius: 2
+        Rectangle {
+            width: contactList.width - 1
+            border {
+                width: 1
+                color: "gray"
             }
+            color: "lightgray"
+            radius: 2
         }
         focus: true
 

@@ -30,12 +30,13 @@ find_package(Qt5Contacts REQUIRED)
 find_package(Qt5Qml REQUIRED)
 find_package(Qt5Quick REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5DBus REQUIRED)
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(FOLKS REQUIRED folks)
-pkg_check_modules(FOLKS_TP REQUIRED folks-telepathy)
 pkg_check_modules(GIO REQUIRED gio-2.0)
-pkg_check_modules(TP_QT5 REQUIRED TelepathyQt5)
+pkg_check_modules(GLIB REQUIRED glib-2.0)
+
 
 execute_process(
     COMMAND qmake -query QT_INSTALL_PLUGINS
